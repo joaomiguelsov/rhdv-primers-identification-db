@@ -7,10 +7,10 @@
 ## Table of Contents
 
 - [Background](#background)
+- [Repository Structure](#repository-structure)
 - [Datasets](#datasets)
 - [Workflows](#workflows)
 - [Validation](#validation)
-- [Repository Structure](#repository-structure)
 - [How to Use](#how-to-use)
 - [Citation](#citation)
 - [Authors](#authors)
@@ -20,14 +20,31 @@
 
 ## Background
 
-Rabbit haemorrhagic disease virus (RHDV) impacts the European rabbit (*Oryctolagus cuniculus*) and was first discovered in China in 1984. Since then, it has spread globally, leading to significant rabbit population declines in both wild and domestic populations.
+Rabbit haemorrhagic disease virus (RHDV) impacts the European rabbit (*Oryctolagus cuniculus*) and was first discovered in China in 1984. Since then, it has spread globally, causing significant rabbit population declines in both wild and domestic contexts.
 
-To manage the growing volume of RHDV genomic data, this project developed two complementary primer resources:
+To address the growing volume of RHDV genomic data, this project developed two complementary primer resources:
 
 - **AROLit** — an automated computational method to retrieve and curate primers from the scientific literature.
 - **iSOP** — a Python-based workflow to design primers *in silico* for RHDV detection.
 
-Both workflows are designed to support optimal primer-pair selection for PCR applications and are applicable beyond RHDV to any viral or bacterial genome.
+Both workflows support optimal primer-pair selection for PCR applications and are transferable to other viral or bacterial genomes.
+
+---
+
+## Repository Structure
+
+```
+rhdv-primers-identification-db/
+├── data/
+│   ├── AROLit.xlsx           # Literature-derived primer dataset
+│   └── iSOP/                 # In silico designed primer dataset (unzipped)
+├── scripts/
+│   └── AROLit_and_iSOP.py    # Main Python script for AROLit and iSOP workflows
+├── workflows/
+│   └── Workflow RHDV Orange.ows  # Orange Data Mining workflow file
+├── LICENSE
+└── README.md
+```
 
 ---
 
@@ -35,28 +52,30 @@ Both workflows are designed to support optimal primer-pair selection for PCR app
 
 The two core datasets are archived and publicly available on Zenodo:
 
-| Dataset | Description | DOI / Link |
+| Dataset | Description | Link |
 |---|---|---|
 | **AROLit** | Literature-derived primers for RHDV detection | [zenodo.org/records/15112821](https://zenodo.org/records/15112821) |
 | **iSOP** | In silico designed primers for RHDV detection | [zenodo.org/records/15113269](https://zenodo.org/records/15113269) |
+
+- `data/AROLit.xlsx` — structured spreadsheet of primers curated from the scientific literature.
+- `data/iSOP/` — primer sequences and associated metadata generated via the iSOP in silico design workflow.
 
 ---
 
 ## Workflows
 
-### AROLit — Automated Retrieval of Literature Primers
+### `scripts/AROLit_and_iSOP.py`
 
-AROLit is an automated pipeline that systematically retrieves primers from published scientific literature related to RHDV detection. It curates and organises primer sequences into a structured, reusable database suitable for direct PCR applications.
+The main Python script implementing both workflows:
 
-### iSOP — In Silico Primer Design
+- **AROLit**: automates the retrieval and curation of RHDV primers from published literature into a structured format.
+- **iSOP**: designs primers *in silico* from RHDV genomic sequences, applying computational primer design criteria optimised for PCR specificity and sensitivity.
 
-iSOP is a Python-based workflow for designing primers *in silico* against RHDV genomic sequences. It applies computational primer design principles to generate candidate primer pairs optimised for PCR sensitivity and specificity.
+Both workflows are freely accessible, follow **FAIR** principles, and are designed to be adaptable to other viral or bacterial genomes.
 
-Both workflows:
+### `workflows/Workflow RHDV Orange.ows`
 
-- are freely accessible and adhere to **FAIR** (Findable, Accessible, Interoperable, Reusable) principles;
-- produce structured outputs ready for downstream PCR validation;
-- are transferable to other viral or bacterial genomes.
+An [Orange Data Mining](https://orangedatamining.com/) workflow file for visual, no-code exploration and analysis of the primer datasets. Open this file directly in Orange Data Mining to interactively explore and compare AROLit and iSOP primer candidates.
 
 ---
 
@@ -66,29 +85,30 @@ Five top primers from **AROLit** and six from **iSOP** were experimentally valid
 
 ---
 
-## Repository Structure
-
-```
-.
-├── data/
-│   ├── arolit/          # AROLit literature-derived primer data
-│   └── isop/            # iSOP in silico designed primer data
-├── scripts/             # Processing and analysis scripts
-├── notebooks/           # Jupyter notebooks for exploration and validation
-├── results/             # Processed outputs, tables, and figures
-├── docs/                # Additional documentation
-└── README.md
-```
-
----
-
 ## How to Use
 
-1. **Download the datasets** from the Zenodo records linked above.
-2. **Place raw files** in `data/arolit/` and `data/isop/` respectively.
-3. **Use the scripts** in `scripts/` or `notebooks/` to parse, filter, rank, or compare primer candidates.
-4. **Save processed outputs** to `results/` for downstream PCR assay development.
-5. **Cite** both datasets and the associated preprint in any derived work (see [Citation](#citation) below).
+### Requirements
+
+- Python 3.x
+- [Orange Data Mining](https://orangedatamining.com/) (for `.ows` workflow)
+- Required Python packages (add your `requirements.txt` or list dependencies here)
+
+### Run the Python workflow
+
+```bash
+# Clone the repository
+git clone https://github.com/joaomiguelsov/rhdv-primers-identification-db.git
+cd rhdv-primers-identification-db
+
+# Run the main script
+python scripts/AROLit_and_iSOP.py
+```
+
+### Explore with Orange Data Mining
+
+1. Open [Orange Data Mining](https://orangedatamining.com/).
+2. Go to **File → Open** and select `workflows/Workflow RHDV Orange.ows`.
+3. Explore and compare the AROLit and iSOP primer datasets visually.
 
 ---
 
@@ -120,4 +140,4 @@ If you use this repository or the associated datasets in your research, please c
 
 ## License
 
-Please add the appropriate license for this repository. If datasets and code are released under different terms, document each separately in the relevant subdirectory.
+This repository is licensed under the terms described in the [LICENSE](./LICENSE) file.
